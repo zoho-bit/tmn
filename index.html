@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REALSELER • Premium ID Store</title>
+  <meta name="description" content="Premium verified IDs - Instant delivery after payment">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #4f46e5, #7c3aed, #c026d3);
+      color: #333;
+      min-height: 100vh;
+      padding: 15px 10px;
+    }
+
+    .container {
+      max-width: 440px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    /* Modern Header */
+    .header-bar {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 10px;
+      z-index: 200;
+    }
+
+    .logo {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: #4f46e5;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Three Dot Menu */
+    .menu-btn {
+      background: #f8fafc;
+      border: none;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      font-size: 28px;
+      color: #4f46e5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+      transition: all 0.3s;
+    }
+
+    .menu-btn:hover {
+      transform: scale(1.1);
+      background: #f1f5f9;
+    }
+
+    .dropdown {
+      position: absolute;
+      top: 78px;
+      right: 15px;
+      background: white;
+      border-radius: 18px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+      width: 235px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(15px);
+      transition: all 0.35s ease;
+      z-index: 300;
+    }
+
+    .dropdown.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdown a {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 22px;
+      text-decoration: none;
+      color: #1e2937;
+      font-weight: 600;
+      border-bottom: 1px solid #f1f5f9;
+      transition: all 0.2s;
+    }
+
+    .dropdown a:last-child {
+      border-bottom: none;
+    }
+
+    .dropdown a:hover {
+      background: #f0f4ff;
+      color: #4f46e5;
+      padding-left: 28px;
+    }
+
+    /* Cards */
+    .card {
+      background: white;
+      border-radius: 24px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+    }
+
+    .header {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: #4f46e5;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .badge {
+      background: linear-gradient(90deg, #ef4444, #f97316);
+      color: white;
+      padding: 7px 20px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      width: fit-content;
+      margin: 0 auto 16px;
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
+    }
+
+    .stock {
+      text-align: center;
+      font-size: 2.15rem;
+      font-weight: 900;
+      color: #4f46e5;
+      margin: 15px 0;
+    }
+
+    .note {
+      background: #f0f4ff;
+      border-radius: 18px;
+      padding: 18px;
+      font-size: 0.98rem;
+      color: #334155;
+      margin: 18px 0;
+      line-height: 1.6;
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin: 20px 0;
+    }
+
+    .box {
+      background: #f8fafc;
+      border: 2.5px solid transparent;
+      border-radius: 18px;
+      padding: 18px 12px;
+      text-align: center;
+      font-weight: 800;
+      font-size: 1.08rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .box:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px rgba(79, 70, 229, 0.18);
+    }
+
+    .box.active {
+      border-color: #4f46e5;
+      background: linear-gradient(135deg, #f0f4ff, #e0e7ff);
+      color: #4f46e5;
+    }
+
+    .box span {
+      display: block;
+      font-size: 0.9rem;
+      color: #64748b;
+      margin-top: 6px;
+      font-weight: 500;
+    }
+
+    input[type="number"], .custom {
+      width: 100%;
+      padding: 16px;
+      margin: 16px 0;
+      border: 2px solid #e2e8f0;
+      border-radius: 16px;
+      font-size: 1.05rem;
+    }
+
+    input:focus, .custom:focus {
+      border-color: #4f46e5;
+      outline: none;
+    }
+
+    .buy {
+      width: 100%;
+      padding: 18px;
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(90deg, #ef4444, #ec4899);
+      color: white;
+      font-size: 1.18rem;
+      font-weight: 900;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin: 12px 0;
+      box-shadow: 0 8px 22px rgba(236, 72, 153, 0.4);
+    }
+
+    .buy:hover:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(236, 72, 153, 0.5);
+    }
+
+    .buy:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    .normal-btn {
+      width: 100%;
+      padding: 17px;
+      border: 2.5px solid #4f46e5;
+      border-radius: 50px;
+      background: white;
+      color: #4f46e5;
+      font-size: 1.12rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .normal-btn:hover {
+      background: #4f46e5;
+      color: white;
+    }
+
+    .icons {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 28px;
+      font-size: 0.9rem;
+      color: #64748b;
+    }
+
+    .icon {
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .icon div {
+      width: 50px;
+      height: 50px;
+      background: #f0f4ff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 8px;
+      font-size: 1.7rem;
+      color: #4f46e5;
+    }
+
+    .list {
+      background: linear-gradient(135deg, #1e2937, #334155);
+      color: white;
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .list p {
+      margin: 10px 0;
+      opacity: 0.95;
+    }
+
+    .processing {
+      text-align: center;
+      padding: 50px 20px;
+    }
+
+    .spinner {
+      width: 56px;
+      height: 56px;
+      border: 6px solid #e2e8f0;
+      border-top: 6px solid #4f46e5;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 20px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    pre {
+      background: #f8fafc;
+      padding: 18px;
+      border-radius: 16px;
+      white-space: pre-wrap;
+      font-size: 0.95rem;
+      overflow-x: auto;
+      line-height: 1.6;
+    }
+
+    .copy {
+      background: #22c55e;
+      color: white;
+      border: none;
+      padding: 16px;
+      width: 100%;
+      border-radius: 50px;
+      font-weight: 900;
+      margin-top: 15px;
+      cursor: pointer;
+    }
+
+    #custom-alert {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      background: linear-gradient(135deg, #ef4444, #ec4899);
+      color: white;
+      font-weight: bold;
+      padding: 20px 32px;
+      border-radius: 20px;
+      font-size: 1.15rem;
+      text-align: center;
+      z-index: 9999;
+      opacity: 0;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+      transition: all 0.4s ease;
+    }
+
+    #custom-alert.show {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .footer {
+      text-align: center;
+      color: rgba(255,255,255,0.9);
+      margin-top: 40px;
+      padding: 20px 0;
+      font-size: 0.95rem;
+    }
+
+    .footer h3 {
+      font-size: 1.55rem;
+      margin-bottom: 6px;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Modern Header -->
+  <div class="header-bar">
+    <div class="logo">
+      🛍️ REALSELER
+    </div>
+    <button class="menu-btn" id="menuBtn">⋮</button>
+  </div>
+
+  <!-- Right Side Three Dot Dropdown -->
+  <div class="dropdown" id="dropdown">
+    <a href="https://temp-mail.org/" target="_self">📧 Temp Mail ID</a>
+    <a href="https://outlook.live.com/" target="_self">📧 Outlook / Hotmail ID</a>
+    <a href="https://mail.google.com/" target="_self">📧 Gmail ID</a>
+  </div>
+
+  <!-- Main Select Card -->
+  <div class="card" id="select">
+   <!-- <div class="header">🛍️ REALSELER <small></small></div>-->
+    <div class="badge">⚡ Limited Stock!</div>
+    <div class="stock">Normal IDs: <span id="stock">Loading...</span></div>
+    <div class="note">
+      Fresh verified accounts<br>
+      Automatic delivery after payment<br>
+      Fast & secure process
+    </div>
+    <h4 style="margin: 20px 0 12px; text-align:center;">Select Quantity</h4>
+    <div class="options">
+      <div class="box" onclick="pick(1, this)">1 ID <span id="p1"></span></div>
+      <div class="box" onclick="pick(2, this)">2 IDs <span id="p2"></span></div>
+      <div class="box" onclick="pick(5, this)">5 IDs <span id="p5"></span></div>
+      <div class="box" onclick="pick(10, this)">10 IDs <span id="p10"></span></div>
+    </div>
+    <input type="number" class="custom" placeholder="Custom quantity" min="1" oninput="customQty(this.value)">
+   
+    <button class="buy" id="buy" disabled>Buy Now (Premium)</button>
+    <button class="normal-btn" onclick="openNormalIDs()">Verify IDs</button>
+    
+    <div class="icons">
+      <div class="icon"><div>🔒</div>Secure</div>
+      <div class="icon"><div>⚡</div>Instant</div>
+      <div class="icon" onclick="openWhatsApp()">
+        <div><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" style="width:26px;height:26px;"></div>
+        Support
+      </div>
+    </div>
+  </div>
+
+  <div class="card list">
+    <p>✔ Do not change password immediately</p>
+    <p>✔ Do not sync on multiple devices</p>
+    <p>✔ Avoid same IP for many IDs</p>
+    <p>✔ If pending > 30 min → contact support</p>
+  </div>
+
+  <div class="card" id="payment" style="display:none">
+    <h3 style="text-align:center; color:#4f46e5;">Scan & Pay</h3>
+    <p style="text-align:center; margin:10px 0;">
+      Quantity: <b id="pq"></b><br>
+      Total: ₹<b id="pa"></b>
+    </p>
+    <img id="qr" width="220" style="display:block; margin:20px auto; border-radius:12px;" alt="Fixed UPI QR Code">
+    <input type="text" id="utr" class="custom" placeholder="Enter 12-digit UTR" maxlength="12">
+    <button class="buy" onclick="submit()">Submit Payment</button>
+  </div>
+
+  <div class="card processing" id="processing" style="display:none">
+    <div class="spinner"></div>
+    <p>Verifying Payment...<br>Please wait</p>
+  </div>
+
+  <div class="card" id="success" style="display:none">
+    <h3 style="color:#22c55e; text-align:center;">✅ IDs Delivered Successfully</h3>
+    <pre id="ids"></pre>
+    <button class="copy" onclick="copy()">Copy All IDs</button>
+  </div>
+
+  <div id="custom-alert"></div>
+
+  <div class="footer">
+    <h3>REALSELER</h3>
+    <p>Premium ID Provider • Trusted Service</p>
+    <p>© 2026 All Rights Reserved</p>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+  import { getDatabase, ref, onValue, push, update, get, query, limitToFirst, remove } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
+
+  const CONFIG_URL = "https://dad.sawanenter7209.workers.dev/config";
+  let db;
+
+  async function initFirebase() {
+    try {
+      const res = await fetch(CONFIG_URL);
+      const firebaseConfig = await res.json();
+      const app = initializeApp(firebaseConfig);
+      db = getDatabase(app);
+      startApp();
+    } catch (err) {
+      console.error("Firebase load error:", err);
+      alert("Server connection failed ❌");
+    }
+  }
+
+  const stockEl = document.getElementById('stock');
+  const buyBtn = document.getElementById('buy');
+  const selectDiv = document.getElementById('select');
+  const paymentDiv = document.getElementById('payment');
+  const processingDiv = document.getElementById('processing');
+  const successDiv = document.getElementById('success');
+  const pqEl = document.getElementById('pq');
+  const paEl = document.getElementById('pa');
+  const qrEl = document.getElementById('qr');
+  const utrEl = document.getElementById('utr');
+  const idsEl = document.getElementById('ids');
+
+  const CLOUDFLARE_WORKER_URL = "https://haa.sawanenter7209.workers.dev/";
+  const whatsappNumber = "84947229295";
+
+  let qty = 0;
+  let price = 0;
+  let orderId = "";
+  let stockCount = 0;
+  let shopOpen = true;
+
+  function showAlert(msg) {
+    const alertBox = document.getElementById('custom-alert');
+    alertBox.textContent = msg;
+    alertBox.classList.add('show');
+    setTimeout(() => alertBox.classList.remove('show'), 3000);
+  }
+
+  function isClosed() {
+    const hour = new Date().getHours();
+    return hour >= 0 && hour < 6;
+  }
+
+  function startApp() {
+    onValue(ref(db, "settings/shopOpen"), snap => {
+      shopOpen = snap.exists() ? snap.val() : true;
+    });
+    onValue(ref(db, "stock"), snap => {
+      let count = 0;
+      snap.forEach(child => {
+        if (!child.val().sold) count++;
+      });
+      stockCount = count;
+      stockEl.textContent = count;
+      buyBtn.disabled = count === 0;
+    });
+    onValue(ref(db, "settings/pricePerId"), snap => {
+      price = snap.val() || 50;
+      document.getElementById('p1').textContent = "₹" + price;
+      document.getElementById('p2').textContent = "₹" + (price * 2);
+      document.getElementById('p5').textContent = "₹" + (price * 5);
+      document.getElementById('p10').textContent = "₹" + (price * 10);
+    });
+  }
+
+  window.pick = (q, el) => {
+    if (stockCount === 0) return showAlert("❌ No stock left");
+    if (q > stockCount) return showAlert("Not enough stock");
+    qty = q;
+    document.querySelectorAll('.box').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    buyBtn.textContent = `Buy Now (Premium) ₹${qty * price}`;
+    buyBtn.disabled = false;
+  };
+
+  window.customQty = (val) => {
+    qty = Number(val) || 0;
+    if (qty > 0) {
+      buyBtn.textContent = `Buy Now (Premium) ₹${qty * price}`;
+      buyBtn.disabled = false;
+    } else {
+      buyBtn.disabled = true;
+    }
+  };
+
+  buyBtn.onclick = async () => {
+    if (qty <= 0) return showAlert("Select quantity first");
+    if (qty > stockCount) return showAlert("Not enough stock");
+    orderId = push(ref(db, "orders")).key;
+    push(ref(db, "orders"), {
+      qty,
+      amount: qty * price,
+      status: "created",
+      time: Date.now(),
+      orderId
+    });
+    selectDiv.style.display = "none";
+    paymentDiv.style.display = "block";
+    pqEl.textContent = qty;
+    paEl.textContent = qty * price;
+    qrEl.src = `${CLOUDFLARE_WORKER_URL}qr?${Date.now()}`;
+  };
+
+  window.submit = () => {
+    const utrVal = utrEl.value.trim();
+    if (!utrVal) return showAlert("Enter UTR number");
+    if (!/^\d{12}$/.test(utrVal)) return showAlert("Invalid UTR - exactly 12 digits");
+    update(ref(db, "orders/" + orderId), {
+      utr: utrVal,
+      status: "pending"
+    });
+    paymentDiv.style.display = "none";
+    processingDiv.style.display = "block";
+    onValue(ref(db, "orders/" + orderId + "/status"), snap => {
+      if (snap.val() === "verified") {
+        deliverAndRemoveFromStock();
+      }
+    });
+    onValue(ref(db, "rejected/" + orderId), snap => {
+      if (snap.exists()) {
+        processingDiv.style.display = "none";
+        selectDiv.style.display = "block";
+        showAlert("❌ Payment not matched / rejected");
+        remove(ref(db, "rejected/" + orderId));
+      }
+    });
+  };
+
+  async function deliverAndRemoveFromStock() {
+    try {
+      const stockRef = ref(db, "stock");
+      const snapshot = await get(query(stockRef, limitToFirst(qty + 10)));
+      let available = [];
+      snapshot.forEach(child => {
+        const val = child.val();
+        if (!val.sold) available.push({ key: child.key, data: val });
+      });
+      if (available.length < qty) {
+        idsEl.textContent = "Error: Not enough valid stock at delivery time";
+        processingDiv.style.display = "none";
+        successDiv.style.display = "block";
+        return;
+      }
+      let deliveredText = "";
+      const keysToRemove = [];
+      for (let i = 0; i < qty; i++) {
+        const item = available[i];
+        const d = item.data;
+        deliveredText += `${d.username || 'N/A'}\n${d.password || 'N/A'}\n${d.phone || 'N/A'}\n${d.email || 'N/A'}\n\n`;
+        keysToRemove.push(item.key);
+      }
+      const removePromises = keysToRemove.map(key => remove(ref(db, `stock/${key}`)));
+      await Promise.all(removePromises);
+      idsEl.textContent = deliveredText.trim() || "Delivered - contact support if empty";
+      processingDiv.style.display = "none";
+      successDiv.style.display = "block";
+      showAlert("Stock updated - " + qty + " IDs removed");
+    } catch (err) {
+      console.error("Delivery error:", err);
+      showAlert("Delivery failed - contact support");
+      processingDiv.style.display = "none";
+      selectDiv.style.display = "block";
+    }
+  }
+
+  window.copy = () => {
+    navigator.clipboard.writeText(idsEl.textContent)
+      .then(() => showAlert("✅ Copied!"))
+      .catch(() => showAlert("Copy failed"));
+  };
+
+  window.openWhatsApp = () => {
+    window.open(`https://wa.me/${whatsappNumber}?text=Hello REALSELER Support! Need help.`, "_blank");
+  };
+
+  window.openNormalIDs = () => {
+     window.location.href = "https://realsrta.sawanenter7209.workers.dev/";
+  };
+
+  // Three Dot Menu Script
+  const menuBtn = document.getElementById('menuBtn');
+  const dropdown = document.getElementById('dropdown');
+
+  menuBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    dropdown.classList.toggle('show');
+  });
+
+  document.addEventListener('click', () => {
+    dropdown.classList.remove('show');
+  });
+
+  dropdown.addEventListener('click', (e) => {
+    e.stopPropagation();
+  });
+
+  window.onload = () => {
+    initFirebase();
+  };
+</script>
+</body>
+</html>
