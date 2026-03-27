@@ -392,16 +392,16 @@
 
   <!-- Right Side Three Dot Dropdown -->
   <div class="dropdown" id="dropdown">
-    <a href="https://temp-mail.org/" target="_self">📧 Temp Mail ID</a>
-    <a href="https://outlook.live.com/" target="_self">📧 Outlook / Hotmail ID</a>
-    <a href="https://mail.google.com/" target="_self">📧 Gmail ID</a>
+    <a href="https://tmn.sawanenter7209.workers.dev/" target="_self">📧 Temp Mail ID</a>
+    <a href="https://ohn.sawanenter7209.workers.dev/" target="_self">📧 Outlook / Hotmail ID</a>
+    <a href="https://gn.sawanenter7209.workers.dev/" target="_self">📧 Gmail ID</a>
   </div>
 
   <!-- Main Select Card -->
   <div class="card" id="select">
    <!-- <div class="header">🛍️ REALSELER <small></small></div>-->
     <div class="badge">⚡ Limited Stock!</div>
-    <div class="stock">Tamp Mail IDs: <span id="stock">Loading...</span></div>
+    <div class="stock">Outlook/Hotmail IDs: <span id="stock">Loading...</span></div>
     <div class="note">
       Fresh verified accounts<br>
       Automatic delivery after payment<br>
@@ -417,7 +417,7 @@
     <input type="number" class="custom" placeholder="Custom quantity" min="1" oninput="customQty(this.value)">
    
     <button class="buy" id="buy" disabled>Buy Now (Premium)</button>
-    <button class="normal-btn" onclick="openNormalIDs()">Verify IDs</button>
+   <!-- <button class="normal-btn" onclick="openNormalIDs()">Verify IDs</button>-->
     
     <div class="icons">
       <div class="icon"><div>🔒</div>Secure</div>
@@ -468,10 +468,15 @@
 </div>
 
 <script type="module">
+  let pauseRefresh = false;
+setInterval(() => {
+    if (!pauseRefresh) location.reload();
+}, 2000);
+  
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
   import { getDatabase, ref, onValue, push, update, get, query, limitToFirst, remove } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
 
-  const CONFIG_URL = "https://dad.sawanenter7209.workers.dev/config";
+  const CONFIG_URL = "https://tmn.sawanenter7209.workers.dev/config";
   let db;
 
   async function initFirebase() {
