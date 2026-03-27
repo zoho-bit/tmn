@@ -468,11 +468,7 @@
 </div>
 
 <script type="module">
-  let pauseRefresh = false;
-setInterval(() => {
-    if (!pauseRefresh) location.reload();
-}, 2000);
-  
+ 
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
   import { getDatabase, ref, onValue, push, update, get, query, limitToFirst, remove } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
 
